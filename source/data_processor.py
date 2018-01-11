@@ -1,10 +1,9 @@
-from numpy import genfromtxt
 import pandas as pd
-import numpy as np
 from datetime import datetime
+import os
+OOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-
-def load_data_file(path="../data/orders.csv"):
+def load_data_file(path= OOT_DIR + "/../data/orders.csv"):
     return pd.read_csv(path,sep=",",header=0)
 
 
