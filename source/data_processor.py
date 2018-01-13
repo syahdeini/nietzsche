@@ -1,11 +1,15 @@
 import pandas as pd
 from datetime import datetime
 import os
+from exceptions import OrderCsvNotFound
 OOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def load_data_file(path= OOT_DIR + "/../data/orders.csv"):
-    return pd.read_csv(path,sep=",",header=0)
-
+    try:
+       return pd.read_csv(path,sep=",",header=0)
+    except Exception as exc:
+        if isinstance(exc,FileNotFoundError):
+            raise OrderCsvNotFound(path)
 
 def max_num_items(dataset):
     # Max number of items in one order: if a customer has more than one order, take the one with more items
