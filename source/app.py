@@ -48,8 +48,8 @@ def load_dataset(dataset):
    except Exception as exc:
        if isinstance(exc,FileNotFoundError):
            logger.error("compiled csv file not found")
-#           dataset = process_to_save_dataset()
-           return process_to_save_dataset()
+           dataset = process_to_save_dataset()
+           return dataset
 def process_to_save_dataset():
     logger.info("processing dataset")
     dataset = load_data_file()
