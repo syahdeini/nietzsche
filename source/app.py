@@ -50,6 +50,7 @@ def load_dataset(dataset):
            logger.error("compiled csv file not found")
            dataset = process_to_save_dataset()
            return dataset
+
 def process_to_save_dataset():
     logger.info("processing dataset")
     dataset = load_data_file()
@@ -87,7 +88,7 @@ def start():
     global dataset
     model = load_model(model)
     dataset = load_dataset(dataset)
-
+    logger.info("ready to receive request")
 
 @app.route("/get_clv")
 async def get_clv(request):
