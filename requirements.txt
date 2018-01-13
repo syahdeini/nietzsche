@@ -1,4 +1,6 @@
 pandas
 dill
 sanic
+gunicorn
+coloredlogs
 asyncio

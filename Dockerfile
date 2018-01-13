@@ -19,3 +19,4 @@ COPY README.md /appication
 
 WORKDIR /application
 RUN pip3 install -r requirements.txt
+ENTRYPOINT ["/bin/sh","entrypoint.sh"]
