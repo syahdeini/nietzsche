@@ -81,6 +81,11 @@ it can be run using cron job, but I prefer using airflow
 
 
 
+## Unittest
+
+To run unittest, type `sh test_scripts.sh`
+the unittest contains two test script source/test_app.py and source/test_data_processor.py
+
 ## Benchmark
 Benchmark is tested using wrk
 the test machine information :
