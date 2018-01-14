@@ -51,9 +51,10 @@ def load_dataset(dataset):
            dataset = process_to_save_dataset()
            return dataset
 
-def process_to_save_dataset():
+def process_to_save_dataset(dataset=None):
     logger.info("processing dataset")
-    dataset = load_data_file()
+    if dataset is None:
+        dataset = load_data_file()
     dataset = max_num_items(dataset)
     dataset = max_revenue(dataset)
     dataset = total_revenue(dataset)
@@ -89,6 +90,7 @@ def start():
     model = load_model(model)
     dataset = load_dataset(dataset)
     logger.info("ready to receive request")
+    return True
 
 @app.route("/get_clv")
 async def get_clv(request):
