@@ -152,5 +152,7 @@ Transfer/sec:      3.79KB
 
 ## P.S 
 The docker images can be deployed in kubernetes server 
+
 it's better put prometheus_client on the microservice
+
 and to use airflow as a scheduller for calculating new compiled csv
