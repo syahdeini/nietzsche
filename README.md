@@ -1,8 +1,23 @@
 # nietzsche
-CLV calculator build on top of sanic framework
+CLV calculator build on top of sanic framework<br>
 port : 7787
 
-endpoint
+# How this microprocess work
+[I want to draw an image here]
+
+inside **load model**:
+load model from model/model.dll, and load it into memory
+
+inside **load dataset**:
+return dataset from memory, if it doesn't exist<br>
+return data from compiled csv from warehous/datadum_[Date].csv, if it doesn't exist<br>
+process raw csv data from data/orders.csv and compiled it into csv, save it, and load it to memory.
+
+to refresh data in memory call /refresh_data
+
+## Endpoint
+
+
 ### GET /get_clv
 input as json 
 ```
@@ -34,10 +49,42 @@ output
 
 ### /refresh_data
 
-this endpoint will refresh the data
-(because feature of clv is calculated only once, and then save to memory insinde a variable)
-This end point will be called by scheduller
+this endpoint will refresh the data by compiling new csv from our raw dataset.
+It also save the new compiled data into memory so the process will not need to compiled or load the new csv anymore.
 
+
+## how to run 
+
+### Using Docker
+
+First you need to build the docker file
+```
+cd nietszche
+docker build -t [name of the docker image] .
+docker run [name of the docker image]
+```
+e.g
+```
+cd nietszche
+docker build -t spinoza .
+docker run spinoza
+```
+
+
+### Without docker
+```
+python3 source/app.py
+```
+
+The data processor should be run frequently (e.g every 12.00 am) 
+it can be run using cron job, but I prefer using airflow
+
+
+
+## Unittest
+
+To run unittest, type `sh test_scripts.sh`
+the unittest contains two test script source/test_app.py and source/test_data_processor.py
 
 ## Benchmark
 Benchmark is tested using wrk
@@ -70,61 +117,45 @@ NUMA node0 CPU(s):     0-3
 ```
 Baseline benchmark
 ```
-wrk http://0.0.0.0:7787/get_clv -c 10 -t 4 -s benchmarks/scripts/benchmark.lua 
+wrk http://0.0.0.0:7787/get_clv -c 1 -t 1 -s benchmarks/scripts/benchmark.lua 
 Running 10s test @ http://0.0.0.0:7787/get_clv
-  4 threads and 10 connections
+  1 threads and 1 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   209.73ms   35.53ms 343.62ms   82.01%
-    Req/Sec     6.97      3.14    20.00     88.61%
-  194 requests in 10.02s, 23.37KB read
-  Socket errors: connect 0, read 0, write 0, timeout 5
-  Non-2xx or 3xx responses: 4
-Requests/sec:     19.37
-Transfer/sec:      2.33KB
+    Latency    54.78ms    9.69ms  82.38ms   80.77%
+    Req/Sec    18.19      3.86    20.00     82.00%
+  182 requests in 10.01s, 43.37KB read
+Requests/sec:     18.19
+Transfer/sec:      4.33KB
 ```
-1000 connection with 4 thread
+100 connection with 8 threads
+```
+wrk http://0.0.0.0:7787/get_clv -c 100 -t 8  -s benchmarks/scripts/benchmark.lua 
+Running 10s test @ http://0.0.0.0:7787/get_clv
+  8 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.15s   443.04ms   1.67s    60.00%
+    Req/Sec     3.36      4.13    14.00     90.91%
+  126 requests in 10.10s, 30.02KB read
+  Socket errors: connect 0, read 0, write 0, timeout 96
+Requests/sec:     12.48
+Transfer/sec:      2.97KB
+```
+1000 connection with 4 threads
 ```
 wrk http://0.0.0.0:7787/get_clv -c 1000 -t 4  -s benchmarks/scripts/benchmark.lua 
 Running 10s test @ http://0.0.0.0:7787/get_clv
   4 threads and 1000 connections
+
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     1.94s   264.94us   1.94s    68.97%
-    Req/Sec    21.00      9.90    28.00    100.00%
-  92 requests in 10.08s, 10.78KB read
-  Socket errors: connect 0, read 0, write 0, timeout 63
-Requests/sec:      9.13
-Transfer/sec:      1.07KB
+    Latency     0.00us    0.00us   0.00us    -nan%
+    Req/Sec    18.00      0.00    18.00    100.00%
+  160 requests in 10.07s, 38.12KB read
+  Socket errors: connect 0, read 0, write 0, timeout 160
+Requests/sec:     15.89
+Transfer/sec:      3.79KB
 ```
 
-## how to run 
-
-### Using Docker
-
-First you need to build the docker file
-```
-cd nietszche
-docker build -t [name of the docker image] .
-docker run [name of the docker image]
-```
-e.g
-```
-cd nietszche
-docker build -t spinoza .
-docker run spinoza
-```
-
-The docker images can be deployed in kubernetes server 
-and the metrics from /metrics can be monitor using grafana
-
-### Without docker
-```
-python3 source/app.py
-```
-
-The data processor should be run frequently (e.g every 12.00 am) 
-it can be run using cron job, but I prefer using airflow
-
-## Problem and next to do
-problem that happen is, after first deploy
-it will take more than 
-Need to implement unittest
+## P.S 
+The docker images can be deployed in kubernetes server<br>
+it's better put prometheus_client on the microservice<br>
+and to use airflow as a scheduller for calculating new compiled csv<br>
