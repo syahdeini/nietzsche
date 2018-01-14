@@ -70,9 +70,6 @@ docker build -t spinoza .
 docker run spinoza
 ```
 
-## P.S 
-The docker images can be deployed in kubernetes server 
-and the metrics from /metrics can be monitor using grafana
 
 ### Without docker
 ```
@@ -153,5 +150,7 @@ Requests/sec:     15.89
 Transfer/sec:      3.79KB
 ```
 
-## what next to do
-put prometheus_client 
+## P.S 
+The docker images can be deployed in kubernetes server 
+it's better put prometheus_client on the microservice
+and to use airflow as a scheduller for calculating new compiled csv
