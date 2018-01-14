@@ -3,12 +3,13 @@ CLV calculator build on top of sanic framework<br>
 port : 7787
 
 # How this microprocess work
-[I want to draw an image here]
+![Process](images/process.png)
 
-inside **load model**:
+
+inside **load model**:<br>
 load model from model/model.dll, and load it into memory
 
-inside **load dataset**:
+inside **load dataset**:<br>
 return dataset from memory, if it doesn't exist<br>
 return data from compiled csv from warehous/datadum_[Date].csv, if it doesn't exist<br>
 process raw csv data from data/orders.csv and compiled it into csv, save it, and load it to memory.
