@@ -35,7 +35,7 @@ output
 ### /refresh_data
 
 this endpoint will refresh the data
-(because feature of clv is calculated only once, and then save to memory insinde a variable)
+(because the compiled data for calculating clv only load and calculate once, then the data is saved into variable (memory))
 This end point will be called by scheduller
 
 
