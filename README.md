@@ -62,13 +62,13 @@ First you need to build the docker file
 ```
 cd nietszche
 docker build -t [name of the docker image] .
-docker run [name of the docker image]
+docker run -p 7787:7787 [name of the docker image]
 ```
 e.g
 ```
 cd nietszche
 docker build -t spinoza .
-docker run spinoza
+docker run -p 7787:7787 spinoza
 ```
 
 
