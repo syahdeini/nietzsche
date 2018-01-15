@@ -47,13 +47,17 @@ output
 }
 ```
 If you are using curl : <br>
-'''curl -H "Content-Type: application/json" -X GET -d '{ "customer_id": "450e1c2cbd21687780153995f1be0c23"}' http://localhost:7787/get_clv'''
+```curl -H "Content-Type: application/json" -X GET -d '{ "customer_id": "450e1c2cbd21687780153995f1be0c23"}' http://localhost:7787/get_clv```
+
 
 ### /refresh_data
 
 this endpoint will refresh the data by compiling new csv from our raw dataset.
 It also save the new compiled data into memory so the process will not need to compiled or load the new csv anymore.
 
+```
+curl -H "Content-Type: application/json" -X GET http://localhost:7787/refresh_data
+```
 
 ## how to run 
 
