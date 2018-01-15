@@ -46,7 +46,8 @@ output
    clv: [​ ​244.9,​ ​ ​ ​89.9]
 }
 ```
-
+If you are using curl : <br>
+'''curl -H "Content-Type: application/json" -X GET -d '{ "customer_id": "450e1c2cbd21687780153995f1be0c23"}' http://localhost:7787/get_clv'''
 
 ### /refresh_data
 
