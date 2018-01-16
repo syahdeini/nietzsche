@@ -2,7 +2,7 @@
 CLV calculator build on top of sanic framework<br>
 port : 7787
 
-# How this microprocess work
+# How this microservice work
 ![Process](images/process.png)
 
 
